@@ -18,15 +18,17 @@ DB_WRITE_POINT.useDefaultTags({app: "temp_monitor"});
 //Endpoint - base -> WIP site to display data
 app.get("/", (_, res) => res.send("ok"));
 
-//Endpoint - write data to influx.
+//Endpoint - write data to influx. url = ip/data?temp=23&humid=55
 app.get('/data', async (req, res) => {
     try {
-        const temperature = req.query.temperature;
-        const humidity = req.query.humidity;
-        const point = new Point("Thermohygrometer")
-        .tag("Location", "Outside")
-        .field("Temperature", temperature)
-        .field("Humidity", humidity);
+        const temperature = req.query.temp;
+        const humidity = req.query.humid;
+        const temperatureFloat = parseFloat(temperature);
+        const humidityFloat = parseFloat(humidity);
+        const point = new Point("Thermohygrometer");
+        point.tag("Location", "Outside");
+        point.floatField("Temperature", temperatureFloat);
+        point.floatField("Humidity", humidityFloat);
         DB_WRITE_POINT.writePoint(point); 
         await DB_WRITE_POINT.flush();
         res.send(`Values: ${temperature}, ${humidity} written`)
