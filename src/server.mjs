@@ -46,5 +46,4 @@ app.get("/test", (req,res) => {
 
 app.listen(ENV.PORT, ENV.HOST, () => {
     console.log(`Listening http://${ENV.HOST}:${ENV.PORT}`)
-
 });

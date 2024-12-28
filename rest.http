@@ -1,0 +1,9 @@
+@baseurl = http://20.224.63.86/temp
+### GET Base 
+GET {{baseurl}}/
+
+### GET Test for query params
+GET {{baseurl}}/test?value=111
+
+### GET Write data 
+GET {{baseurl}}/data?temp=23.00&humid=55.00
